@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Popup Launcher</title>
+    <title>Secure Tab Launcher</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,61 +14,49 @@
             margin: 0;
             background-color: #f4f4f9;
         }
-        button {
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
 
-
-
     <script>
-            let popup = window.open("about:blank", "popupWindow", "width=600,height=400");
+        window.onload = function() {
+            // Passing an empty string "" instead of dimensions forces it into a new tab
+            let newTab = window.open("about:blank", "_blank", "");
             
-            if (!popup) {
-                alert("Popup blocked! Please allow popups for this page in your browser settings.");
+            if (!newTab) {
+                alert("Tab block detected! Please allow popups/redirects for this page in your browser settings.");
                 return;
             }
 
             // 2. Safely construct the layout using standard DOM elements
-            let container = popup.document.createElement("div");
-            container.style.cssText = "font-family: Arial, sans-serif; padding: 30px; text-align: center; background: #fff; height: 100%; box-sizing: border-box;";
+            let container = newTab.document.createElement("div");
+            container.style.cssText = "font-family: Arial, sans-serif; padding: 50px; text-align: center; background: #fff; height: 100vh; box-sizing: border-box;";
 
-            let heading = popup.document.createElement("h1");
+            let heading = newTab.document.createElement("h1");
             heading.style.color = "#2c3e50";
-            heading.style.fontSize = "28px";
-            heading.textContent = "Secure DOM Popup";
+            heading.style.fontSize = "36px";
+            heading.textContent = "Secure DOM Content in New Tab";
 
-            let paragraph = popup.document.createElement("p");
+            let paragraph = newTab.document.createElement("p");
             paragraph.style.color = "#7f8c8d";
-            paragraph.style.fontSize = "16px";
-            paragraph.textContent = "This window was opened as about:blank and populated using strict DOM node creation.";
+            paragraph.style.fontSize = "18px";
+            paragraph.textContent = "This is a brand new about:blank tab populated securely via DOM manipulation.";
 
-            let closeButton = popup.document.createElement("button");
-            closeButton.style.cssText = "padding: 10px 20px; font-size: 14px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;";
-            closeButton.textContent = "Close Popup";
+            let closeButton = newTab.document.createElement("button");
+            closeButton.style.cssText = "padding: 12px 24px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;";
+            closeButton.textContent = "Close Tab";
             
-            // Assign the close action directly to the popup window context
+            // Close action for the new tab
             closeButton.onclick = function() { 
-                popup.close(); 
+                newTab.close(); 
             };
 
-            // 3. Assemble and inject the nodes into the popup's body
+            // 3. Assemble and inject the nodes into the new tab's body
             container.appendChild(heading);
             container.appendChild(paragraph);
             container.appendChild(closeButton);
-            popup.document.body.appendChild(container);
+            newTab.document.body.appendChild(container);
+        };
     </script>
 </body>
 </html>
