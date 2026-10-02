@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Popup Launcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Clicking this button triggers the script -->
+    <button id="launchBtn">Open Secure Popup</button>
+
+    <script>
+        document.getElementById('launchBtn').addEventListener('click', () => {
+            // 1. Open the about:blank window
+            let popup = window.open("about:blank", "popupWindow", "width=600,height=400");
+            
+            if (!popup) {
+                alert("Popup blocked! Please allow popups for this page in your browser settings.");
+                return;
+            }
+
+            // 2. Safely construct the layout using standard DOM elements
+            let container = popup.document.createElement("div");
+            container.style.cssText = "font-family: Arial, sans-serif; padding: 30px; text-align: center; background: #fff; height: 100%; box-sizing: border-box;";
+
+            let heading = popup.document.createElement("h1");
+            heading.style.color = "#2c3e50";
+            heading.style.fontSize = "28px";
+            heading.textContent = "Secure DOM Popup";
+
+            let paragraph = popup.document.createElement("p");
+            paragraph.style.color = "#7f8c8d";
+            paragraph.style.fontSize = "16px";
+            paragraph.textContent = "This window was opened as about:blank and populated using strict DOM node creation.";
+
+            let closeButton = popup.document.createElement("button");
+            closeButton.style.cssText = "padding: 10px 20px; font-size: 14px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;";
+            closeButton.textContent = "Close Popup";
+            
+            // Assign the close action directly to the popup window context
+            closeButton.onclick = function() { 
+                popup.close(); 
+            };
+
+            // 3. Assemble and inject the nodes into the popup's body
+            container.appendChild(heading);
+            container.appendChild(paragraph);
+            container.appendChild(closeButton);
+            popup.document.body.appendChild(container);
+        });
+    </script>
+</body>
+</html>
