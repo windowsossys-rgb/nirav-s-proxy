@@ -3,59 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Tab Launcher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-        }
-    </style>
+    <title>Tab Swapper</title>
 </head>
 <body>
-
     <script>
         window.onload = function() {
-            // Passing an empty string "" instead of dimensions forces it into a new tab
+            // 1. Open the new blank tab
             let newTab = window.open("about:blank", "_blank", "");
-            
+
             if (!newTab) {
-                alert("Tab block detected! Please allow popups/redirects for this page in your browser settings.");
+                alert("Tab block detected! Please allow popups/redirects in your browser address bar.");
                 return;
             }
 
-            // 2. Safely construct the layout using standard DOM elements
+            // 2. Build the DOM layout inside the new tab
             let container = newTab.document.createElement("div");
-            container.style.cssText = "font-family: Arial, sans-serif; padding: 50px; text-align: center; background: #fff; height: 100vh; box-sizing: border-box;";
+            container.style.cssText = "font-family: Arial, sans-serif; padding: 50px; text-align: center;";
 
             let heading = newTab.document.createElement("h1");
-            heading.style.color = "#2c3e50";
-            heading.style.fontSize = "36px";
-            heading.textContent = "Secure DOM Content in New Tab";
+            heading.textContent = "Welcome to the New Tab";
 
             let paragraph = newTab.document.createElement("p");
-            paragraph.style.color = "#7f8c8d";
-            paragraph.style.fontSize = "18px";
-            paragraph.textContent = "This is a brand new about:blank tab populated securely via DOM manipulation.";
+            paragraph.textContent = "The original tab has been closed.";
 
-            let closeButton = newTab.document.createElement("button");
-            closeButton.style.cssText = "padding: 12px 24px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;";
-            closeButton.textContent = "Close Tab";
-            
-            // Close action for the new tab
-            closeButton.onclick = function() { 
-                newTab.close(); 
-            };
-
-            // 3. Assemble and inject the nodes into the new tab's body
             container.appendChild(heading);
             container.appendChild(paragraph);
-            container.appendChild(closeButton);
             newTab.document.body.appendChild(container);
+
+            // 3. Close the old tab immediately
+            window.close();
         };
     </script>
 </body>
