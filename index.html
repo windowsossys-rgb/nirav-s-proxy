@@ -31,12 +31,9 @@
 </head>
 <body>
 
-    <!-- Clicking this button triggers the script -->
-    <button id="launchBtn">Open Secure Popup</button>
+
 
     <script>
-        document.getElementById('launchBtn').addEventListener('click', () => {
-            // 1. Open the about:blank window
             let popup = window.open("about:blank", "popupWindow", "width=600,height=400");
             
             if (!popup) {
@@ -72,7 +69,6 @@
             container.appendChild(paragraph);
             container.appendChild(closeButton);
             popup.document.body.appendChild(container);
-        });
     </script>
 </body>
 </html>
